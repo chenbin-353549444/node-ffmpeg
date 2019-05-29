@@ -46,14 +46,13 @@ app.post('/m4a', function (req, res) {
         })
         .on('end', function() {
             console.log('success');
+            let voiceBase64 = new Buffer(command);
+            client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
+                res.end(JSON.stringify(result));
+            }, function(err) {
+                res.end(err);
+            });
         });
-    let ffstream = command.pipe();
-    let voiceBase64 = new Buffer(ffstream.data);
-    client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
-        res.end(JSON.stringify(result));
-    }, function(err) {
-        res.end(err);
-    });
 });
 
 let server = app.listen(7777, function () {
