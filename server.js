@@ -53,6 +53,7 @@ app.post('/m4a', function (req, res) {
         data += chunk;
     });
     ffstream.on('end',function() {
+        console.log(data);
         let voiceBase64 = new Buffer(data);
         client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
             res.end(JSON.stringify(result));
