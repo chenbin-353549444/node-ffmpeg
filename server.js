@@ -1,5 +1,5 @@
 let express = require('express');
-let FfmpegCommand = require('fluent-ffmpeg');
+let ffmpeg = require('fluent-ffmpeg');
 let fs = require('fs');
 let app = express();
 let AipSpeech = require("baidu-aip-sdk").speech;
@@ -33,7 +33,11 @@ app.post('/file_upload', function (req, res) {
 app.post('/file_transform', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req.files[0]);  // 上传的文件信息
-    var command = ffmpeg(fs.createReadStream(req.files[0].path))
+    let infs = fs.createReadStream(req.files[0].path);
+    infs.on('error', function (err) {
+        console.log(err);
+    });
+    let command = ffmpeg(infs)
         .audioCodec('pcm_s16le')
         .audioBitrate('16k')
         .audioChannels(1)
@@ -43,7 +47,7 @@ app.post('/file_transform', function (req, res) {
         .on('end', function() {
             console.log('Processing finished !');
         });
-    var ffstream = command.pipe();
+    let ffstream = command.pipe();
     ffstream.on('data', function(chunk) {
         let voiceBase64 = new Buffer(chunk);
         client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
