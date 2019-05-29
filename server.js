@@ -47,6 +47,7 @@ app.post('/m4a', function (req, res) {
         })
         .on('end', function() {
             console.log('success');
+            console.log(data.length);
             let voiceBase64 = new Buffer(data);
             client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
                 res.end(JSON.stringify(result));
