@@ -34,6 +34,12 @@ app.post('/file_transform', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req.files[0]);  // 上传的文件信息
     let command = ffmpeg(req.files[0].path)
+        .noAudio()
+        .inputFormat('m4a')
+        .audioCodec('pcm_s16le')
+        .audioBitrate(16)
+        .audioChannels(1)
+        .format('pcm')
         .on('error', function(err) {
             console.log('An error occurred: ' + err.message);
         })
