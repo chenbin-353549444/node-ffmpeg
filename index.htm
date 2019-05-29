@@ -3,9 +3,16 @@
     <title>文件上传表单</title>
 </head>
 <body>
-<h3>文件上传：</h3>
-选择一个文件上传: <br />
+<h3>语音识别：</h3>
+选择pcm文件: <br />
 <form action="/file_upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" size="50" />
+    <br />
+    <input type="submit" value="上传文件" />
+</form>
+<h3>语音转换：</h3>
+选择一个语音文件: <br />
+<form action="/file_transform" method="post" enctype="multipart/form-data">
     <input type="file" name="image" size="50" />
     <br />
     <input type="submit" value="上传文件" />
