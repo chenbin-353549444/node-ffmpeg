@@ -5,15 +5,15 @@
 <body>
 <h3>语音识别：</h3>
 选择pcm文件: <br />
-<form action="/file_upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="image" size="50" />
+<form action="/pcm" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" accept="audio/PCMU" size="50" />
     <br />
     <input type="submit" value="上传文件" />
 </form>
-<h3>语音转换：</h3>
-选择一个语音文件: <br />
-<form action="/file_transform" method="post" enctype="multipart/form-data">
-    <input type="file" name="image" size="50" />
+<h3>语音识别：</h3>
+选择m4a文件: <br />
+<form action="/m4a" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" accept="audio/MP4A-LATM" size="50" />
     <br />
     <input type="submit" value="上传文件" />
 </form>

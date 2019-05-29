@@ -17,7 +17,7 @@ app.get('/index.htm', function (req, res) {
     res.sendFile( __dirname + "/" + "index.htm" );
 });
 
-app.post('/file_upload', function (req, res) {
+app.post('/pcm', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req.files[0]);  // 上传的文件信息
     fs.readFile( req.files[0].path, function (err, data) {
@@ -30,13 +30,14 @@ app.post('/file_upload', function (req, res) {
     });
 });
 
-app.post('/file_transform', function (req, res) {
+app.post('/m4a', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req.files[0]);  // 上传的文件信息
     let command = ffmpeg(req.files[0].path)
         .noVideo()
         .inputFormat('m4a')
         .audioCodec('pcm_s16le')
+        .audioBitrate(16)
         .audioFrequency(16000)
         .audioChannels(1)
         .format('s16le')
