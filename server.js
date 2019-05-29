@@ -46,17 +46,17 @@ app.post('/m4a', function (req, res) {
         })
         .on('end', function() {
             console.log('success');
-            let ffstream = command.pipe();
-            ffstream.end('data', function(chunk) {
-                console.log(chunk.length);
-                let voiceBase64 = new Buffer(chunk);
-                client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
-                    res.end(JSON.stringify(result));
-                }, function(err) {
-                    res.end(err);
-                });
-            });
         });
+    let ffstream = command.pipe();
+    ffstream.end('data', function(chunk) {
+        console.log(chunk.length);
+        let voiceBase64 = new Buffer(chunk);
+        client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
+            res.end(JSON.stringify(result));
+        }, function(err) {
+            res.end(err);
+        });
+    });
 });
 
 var server = app.listen(7777, function () {
