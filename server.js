@@ -37,9 +37,9 @@ app.post('/file_transform', function (req, res) {
         .noVideo()
         .inputFormat('m4a')
         .audioCodec('pcm_s16le')
-        .audioBitrate(16)
+        .audioFrequency(16000)
         .audioChannels(1)
-        .format('pcm')
+        .format('s16le')
         .on('error', function(err) {
             console.log('An error occurred: ' + err.message);
         })
