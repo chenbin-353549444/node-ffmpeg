@@ -1,8 +1,8 @@
 #!/bin/bash
 
-(docker stop pwa && echo "stop success") || echo "stop error";
+(docker stop node-ffmpeg && echo "stop success") || echo "stop error";
 
-(docker rm pwa && echo "remove success") || echo "remove error";
+(docker rm node-ffmpeg && echo "remove success") || echo "remove error";
 
 docker build -t node-ffmpeg .;
 
