@@ -45,8 +45,9 @@ app.post('/m4a', function (req, res) {
             console.log('An error occurred: ' + err.message);
         })
         .on('end', function() {
+            console.log('success');
             let ffstream = command.pipe();
-            ffstream.on('end', function(chunk) {
+            ffstream.end('data', function(chunk) {
                 console.log(chunk.length);
                 let voiceBase64 = new Buffer(chunk);
                 client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
