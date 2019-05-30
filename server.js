@@ -33,7 +33,8 @@ app.post('/pcm', function (req, res) {
 app.post('/m4a', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req.files[0]);  // 上传的文件信息
-    ffmpeg(req.files[0].path)
+    let voiceBase64 = new Buffer('');
+    let command = ffmpeg(req.files[0].path)
         .noVideo()
         .inputFormat('m4a')
         .audioCodec('pcm_s16le')
@@ -46,16 +47,20 @@ app.post('/m4a', function (req, res) {
         })
         .on('end', function() {
             console.log('success');
-            fs.readFile( 'output.pcm', function (err, data) {
-                let voiceBase64 = new Buffer(data);
-                client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
-                    res.end(JSON.stringify(result));
-                }, function(err) {
-                    res.end(err);
-                });
-            });
-        })
-        .save('output.pcm');
+        });
+    let ffstream = command.pipe();
+    ffstream.on('data', function(chunk) {
+        voiceBase64.concat(chunk);
+        console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
+    });
+    ffstream.on('end', function() {
+        console.log(voiceBase64.length);
+        client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
+            res.end(JSON.stringify(result));
+        }, function(err) {
+            res.end(err);
+        });
+    });
 
 });
 
