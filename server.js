@@ -47,20 +47,28 @@ app.post('/m4a', function (req, res) {
         })
         .on('end', function() {
             console.log('success');
-            console.log(data.length);
-            let voiceBase64 = new Buffer(data);
-            client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
+            client.recognize(streamToBuffer(ffstream), 'pcm', 16000).then(function(result) {
                 res.end(JSON.stringify(result));
             }, function(err) {
                 res.end(err);
             });
         });
     let ffstream = command.pipe();
-    ffstream.on('data', function(chunk) {
-        data+=chunk;
-        console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
-    });
+
+    // ffstream.on('data', function(chunk) {
+    //     data+=chunk;
+    //     console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
+    // });
 });
+
+function streamToBuffer(stream) {
+    return new Promise((resolve, reject) => {
+        let buffers = [];
+        stream.on('error', reject);
+        stream.on('data', (data) => buffers.push(data));
+        stream.on('end', () => resolve(Buffer.concat(buffers)))
+    });
+}
 
 let server = app.listen(7777, function () {
 
