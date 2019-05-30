@@ -33,7 +33,7 @@ app.post('/pcm', function (req, res) {
 app.post('/m4a', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req.files[0]);  // 上传的文件信息
-    let command = ffmpeg(req.files[0].path)
+    ffmpeg(req.files[0].path)
         .noVideo()
         .inputFormat('m4a')
         .audioCodec('pcm_s16le')
@@ -46,27 +46,18 @@ app.post('/m4a', function (req, res) {
         })
         .on('end', function() {
             console.log('success');
-            client.recognize(command.pipe(), 'pcm', 16000).then(function(result) {
-                res.end(JSON.stringify(result));
-            }, function(err) {
-                res.end(err);
+            fs.readFile( 'output.pcm', function (err, data) {
+                let voiceBase64 = new Buffer(data);
+                client.recognize(voiceBase64, 'pcm', 16000).then(function(result) {
+                    res.end(JSON.stringify(result));
+                }, function(err) {
+                    res.end(err);
+                });
             });
-        });
+        })
+        .save('output.pcm');
 
-    // ffstream.on('data', function(chunk) {
-    //     data+=chunk;
-    //     console.log('ffmpeg just wrote ' + chunk.length + ' bytes');
-    // });
 });
-
-function streamToBuffer(stream) {
-    return new Promise((resolve, reject) => {
-        let buffers = [];
-        stream.on('error', reject);
-        stream.on('data', (data) => buffers.push(data));
-        stream.on('end', () => resolve(Buffer.concat(buffers)))
-    });
-}
 
 let server = app.listen(7777, function () {
 
