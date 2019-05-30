@@ -4,7 +4,8 @@ let fs = require('fs');
 let app = express();
 let AipSpeech = require("baidu-aip-sdk").speech;
 
-let client = new AipSpeech(0, 'iXCDUMbDyk9At3llLTzG2ar6', 'VUo9Ei6FbU7ACVrkrVtccpENHbF33VZg');
+// 填写百度的API Key和Secret Key
+let client = new AipSpeech(0, 'XXX', 'XXX');
 
 let bodyParser = require('body-parser');
 let multer  = require('multer');
