@@ -32,7 +32,7 @@ app.post('/pcm', function (req, res) {
 
 app.post('/m4a', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
-    console.log(req.files[0]);  // 上传的文件信息
+    console.log(req);  // 上传的文件信息
     let voiceBase64 = new Buffer('');
     let command = ffmpeg(req.files[0].path)
         .noVideo()
