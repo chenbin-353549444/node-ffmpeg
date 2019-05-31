@@ -11,7 +11,7 @@ let multer  = require('multer');
 
 app.use('/public', express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ dest: '/tmp/'}).array('image'));
+app.use(multer({ dest: '/tmp/'}).array('buf'));
 
 app.get('/index.htm', function (req, res) {
     res.sendFile( __dirname + "/" + "index.htm" );
@@ -30,7 +30,7 @@ app.post('/pcm', function (req, res) {
     });
 });
 
-app.post('/m4a', multer.any(), function (req, res) {
+app.post('/m4a', function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req);  // 上传的文件信息
     let voiceBase64 = new Buffer('');
