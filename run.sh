@@ -6,6 +6,6 @@
 
 docker build -t node-ffmpeg .;
 
-docker run -d --name node-ffmpeg -p 7777:7777 node-ffmpeg;
+docker run -d --name node-ffmpeg -p 80:80 node-ffmpeg;
 
 (docker rmi $(docker images -aq -f "dangling=true") && echo "clean success") || echo "clean error";

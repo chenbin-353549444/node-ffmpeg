@@ -64,7 +64,7 @@ app.post('/m4a', function (req, res) {
 
 });
 
-let server = app.listen(7777, function () {
+let server = app.listen(80, function () {
 
     var host = server.address().address;
     var port = server.address().port;
