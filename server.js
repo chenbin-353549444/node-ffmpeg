@@ -30,7 +30,7 @@ app.post('/pcm', function (req, res) {
     });
 });
 
-app.post('/m4a', function (req, res) {
+app.post('/m4a', upload.any(), function (req, res) {
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     console.log(req);  // 上传的文件信息
     let voiceBase64 = new Buffer('');
