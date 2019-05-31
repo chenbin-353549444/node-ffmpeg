@@ -13,7 +13,7 @@ app.use('/public', express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ dest: '/tmp/'}).array('buf'));
 
-app.get('/index.htm', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile( __dirname + "/" + "index.htm" );
 });
 
