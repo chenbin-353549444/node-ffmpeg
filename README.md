@@ -1,5 +1,5 @@
 ## 语音识别（支持pcm和m4a）
-web.chenb.top
+http://web.chenb.top
 
 ### 说明
 使用百度的语音识别接口，用FFMPEG转音频文件
