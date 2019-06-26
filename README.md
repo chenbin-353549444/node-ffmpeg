@@ -7,7 +7,7 @@ http://web.chenb.top
 ### 部署
 修改server.js的`API Key`和`Secret Key`  
 在安装好Docker的机器上运行`sh run.sh`，如果有Jenkins可以直接新建管道构建  
-完成后访问测试页面(http://127.0.0.1:80/index.htm)
+完成后访问测试页面(http://127.0.0.1)
 ![](view.jpg)
 
 ### 参考
